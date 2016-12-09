@@ -42,6 +42,23 @@ namespace HairSalon.Objects
       cmd.ExecuteNonQuery();
       conn.Close();
     }
+    public override bool Equals(Object otherStylist)
+    {
+      if (!(otherStylist is Stylist))
+      {
+        return false;
+      }
+      else
+      {
+      Stylist newStylist = (Stylist) otherStylist;
+      bool idEquality = (this.GetId() == newStylist.GetId());
+      bool nameEquality = (this.GetName() == newStylist.GetName());
+      bool phoneEqulity = (this.GetPhone() == newStylist.GetPhone());
+      bool notesEquality = (this.GetNotes() == newStylist.GetNotes());
+      Console.WriteLine(nameEquality);
+      return (idEquality && nameEquality && phoneEqulity && notesEquality);
+      }
+    }
     public static List<Stylist> GetAll()
     {
       List<Stylist> allStylists = new List<Stylist>{};
@@ -59,6 +76,8 @@ namespace HairSalon.Objects
         string notes = rdr.GetString(3);
         Stylist newStylist = new Stylist(name, phone, notes, id);
         allStylists.Add(newStylist);
+        Console.WriteLine(id + " " + name + " " + phone + " " + notes);
+        Console.WriteLine(allStylists[0 ].GetId());
       }
         if(rdr != null)
         {
@@ -70,6 +89,30 @@ namespace HairSalon.Objects
         }
       return allStylists;
     }
+    public void Save()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
 
+      SqlCommand cmd = new SqlCommand("INSERT INTO stylist (name, phone, notes) OUTPUT INSERTED.id VALUES (@name, @phone, @notes);", conn);
+
+      SqlParameter nameParameter = new SqlParameter("@name", this.GetName());
+      SqlParameter phoneParameter = new SqlParameter ("@phone", this.GetPhone());
+      SqlParameter notesParameter = new SqlParameter("@notes", this.GetNotes());
+
+      cmd.Parameters.Add(nameParameter);
+      cmd.Parameters.Add(phoneParameter);
+      cmd.Parameters.Add(notesParameter);
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      if(rdr != null)
+      {
+        rdr.Close();
+      }
+      if(conn != null)
+      {
+        conn.Close();
+      }
+    }
   }
 }
