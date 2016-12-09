@@ -25,15 +25,22 @@ namespace  HairSalon
       Assert.Equal(0, result);
     }
     [Fact]
-    public void StylistSavesTODatabase_true()
+    public void Test_EqualOverride_True()
     {
-      //Arrange
-      Stylist newStylist = new Stylist("Terry", "3309627946", "notes");
-      //Act
-      newStylist.Save();
-      List<Stylist> allStylists = Stylist.GetAll();
-      //Assert
-      Assert.Equal(allStylists[0], newStylist);
+      Stylist firstStylist = new Stylist("Terry", "3309627946", "notes");
+      Stylist secondStylist = new Stylist("Terry", "3309627946", "notes");
+      Assert.Equal(firstStylist, secondStylist);
     }
+    // [Fact]
+    // public void StylistSavesTODatabase_true()
+    // {
+    //   //Arrange
+    //   Stylist newStylist = new Stylist("Terry", "3309627946", "notes");
+    //   //Act
+    //   newStylist.Save();
+    //   List<Stylist> allStylists = Stylist.GetAll();
+    //   //Assert
+    //   Assert.Equal(allStylists[0], newStylist);
+    // }
   }
 }
