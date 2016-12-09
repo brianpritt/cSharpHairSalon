@@ -18,31 +18,29 @@ namespace HairSalon.Objects
       _notes = notes;
       _id = id;
     }
+
     public string GetName()
     {
       return _name;
     }
+
     public string GetPhone()
     {
       return _phone;
     }
+
     public string GetNotes()
     {
       return _notes;
     }
+
     public int GetId()
     {
       return _id;
     }
-    public static void DeleteAll()
-    {
-      SqlConnection conn = DB.Connection();
-      conn.Open();
-      SqlCommand cmd = new SqlCommand("DELETE FROM stylist;", conn);
-      cmd.ExecuteNonQuery();
-      conn.Close();
-    }
-    public override bool Equals(Object otherStylist)
+
+
+    public override bool Equals(System.Object otherStylist)
     {
       if (!(otherStylist is Stylist))
       {
@@ -51,17 +49,26 @@ namespace HairSalon.Objects
       else
       {
       Stylist newStylist = (Stylist) otherStylist;
-      bool idEquality = (this.GetId() == newStylist.GetId());
+      // bool idEquality = (this.GetId() == newStylist.GetId());
       bool nameEquality = (this.GetName() == newStylist.GetName());
       bool phoneEqulity = (this.GetPhone() == newStylist.GetPhone());
       bool notesEquality = (this.GetNotes() == newStylist.GetNotes());
       Console.WriteLine(nameEquality);
-      return (idEquality && nameEquality && phoneEqulity && notesEquality);
+      return (nameEquality && phoneEqulity && notesEquality);
       }
+    }
+
+    public static void DeleteAll()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlCommand cmd = new SqlCommand("DELETE FROM stylist;", conn);
+      cmd.ExecuteNonQuery();
+      conn.Close();
     }
     public static List<Stylist> GetAll()
     {
-      List<Stylist> allStylists = new List<Stylist>{};
+      List<Stylist> allStylists = new List<Stylist> {};
       SqlConnection conn = DB.Connection();
       conn.Open();
 
@@ -89,6 +96,7 @@ namespace HairSalon.Objects
         }
       return allStylists;
     }
+
     public void Save()
     {
       SqlConnection conn = DB.Connection();
@@ -113,6 +121,41 @@ namespace HairSalon.Objects
       {
         conn.Close();
       }
+    }
+
+    public static Stylist Find(int id)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM stylist WHERE id = @stylist_id;", conn);
+      SqlParameter stylistIdParameter = new SqlParameter("@stylist_Id", id.ToString());
+
+      cmd.Parameters.Add(stylistIdParameter);
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      int foundId = 0;
+      string foundStylistName = null;
+      string foundStylistPhone = null;
+      string foundStylistNotes = null;
+
+      while(rdr.Read())
+      {
+        foundId = rdr.GetInt32(0);
+        foundStylistName = rdr.GetString(1);
+        foundStylistPhone = rdr.GetString(2);
+        foundStylistNotes = rdr.GetString(3);
+      }
+      Stylist foundStylist = new Stylist(foundStylistName, foundStylistPhone, foundStylistNotes, foundId);
+      if(rdr != null)
+      {
+        rdr.Close();
+      }
+      if(conn != null)
+      {
+        conn.Close();
+      }
+      return foundStylist;
     }
   }
 }
