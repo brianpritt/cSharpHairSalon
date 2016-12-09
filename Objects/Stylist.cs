@@ -11,10 +11,9 @@ namespace HairSalon.Objects
     string _notes;
     int _id;
 
-    public Stylist(string name, string phone, string notes, int id = 0)
+    public Stylist(string name, string notes, int id = 0)
     {
       _name = name;
-      _phone = phone;
       _notes = notes;
       _id = id;
     }
@@ -22,11 +21,6 @@ namespace HairSalon.Objects
     public string GetName()
     {
       return _name;
-    }
-
-    public string GetPhone()
-    {
-      return _phone;
     }
 
     public string GetNotes()
@@ -51,9 +45,8 @@ namespace HairSalon.Objects
       Stylist newStylist = (Stylist) otherStylist;
       // bool idEquality = (this.GetId() == newStylist.GetId());
       bool nameEquality = (this.GetName() == newStylist.GetName());
-      bool phoneEqulity = (this.GetPhone() == newStylist.GetPhone());
       bool notesEquality = (this.GetNotes() == newStylist.GetNotes());
-      return (nameEquality && phoneEqulity && notesEquality);
+      return (nameEquality && notesEquality);
       }
     }
 
@@ -78,9 +71,8 @@ namespace HairSalon.Objects
       {
         int id = rdr.GetInt32(0);
         string name = rdr.GetString(1);
-        string phone = rdr.GetString(2);
-        string notes = rdr.GetString(3);
-        Stylist newStylist = new Stylist(name, phone, notes, id);
+        string notes = rdr.GetString(2);
+        Stylist newStylist = new Stylist(name, notes, id);
         allStylists.Add(newStylist);
       }
         if(rdr != null)
@@ -99,14 +91,12 @@ namespace HairSalon.Objects
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("INSERT INTO stylist (name, phone, notes) OUTPUT INSERTED.id VALUES (@name, @phone, @notes);", conn);
+      SqlCommand cmd = new SqlCommand("INSERT INTO stylist (name, notes) OUTPUT INSERTED.id VALUES (@name, @notes);", conn);
 
       SqlParameter nameParameter = new SqlParameter("@name", this.GetName());
-      SqlParameter phoneParameter = new SqlParameter ("@phone", this.GetPhone());
       SqlParameter notesParameter = new SqlParameter("@notes", this.GetNotes());
 
       cmd.Parameters.Add(nameParameter);
-      cmd.Parameters.Add(phoneParameter);
       cmd.Parameters.Add(notesParameter);
       SqlDataReader rdr = cmd.ExecuteReader();
       while(rdr.Read())
@@ -136,17 +126,15 @@ namespace HairSalon.Objects
 
       int foundId = 0;
       string foundStylistName = null;
-      string foundStylistPhone = null;
       string foundStylistNotes = null;
 
       while(rdr.Read())
       {
         foundId = rdr.GetInt32(0);
         foundStylistName = rdr.GetString(1);
-        foundStylistPhone = rdr.GetString(2);
-        foundStylistNotes = rdr.GetString(3);
+        foundStylistNotes = rdr.GetString(2);
       }
-      Stylist foundStylist = new Stylist(foundStylistName, foundStylistPhone, foundStylistNotes, foundId);
+      Stylist foundStylist = new Stylist(foundStylistName, foundStylistNotes, foundId);
       Console.WriteLine(foundStylistName);
       if(rdr != null)
       {
@@ -157,6 +145,60 @@ namespace HairSalon.Objects
         conn.Close();
       }
       return foundStylist;
+    }
+    public void EditName(string newName)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("UPDATE stylist SET name = @NewName OUTPUT INSERTED.name WHERE id = @stylistId;", conn);
+
+      SqlParameter nameParameter = new SqlParameter("@NewName", newName);
+      SqlParameter stylistIdParameter = new SqlParameter("@stylistId", this.GetId());
+      cmd.Parameters.Add(nameParameter);
+      cmd.Parameters.Add(stylistIdParameter);
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      while (rdr.Read())
+      {
+        this._name = rdr.GetString(0);
+      }
+      if(rdr != null)
+      {
+        rdr.Close();
+      }
+      if(conn != null)
+      {
+        conn.Close();
+      }
+    }
+    public void EditDetails(string newNotes)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("UPDATE stylist SET notes = @NewNotes OUTPUT INSERTED.notes WHERE id = @stylistId;", conn);
+
+      SqlParameter notesParameter = new SqlParameter("@NewNotes", newNotes);
+      SqlParameter stylistIdParameter = new SqlParameter("@stylistId", this.GetId());
+      cmd.Parameters.Add(notesParameter);
+      cmd.Parameters.Add(stylistIdParameter);
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      while (rdr.Read())
+      {
+        this._notes = rdr.GetString(0);
+      }
+      if(rdr != null)
+      {
+        rdr.Close();
+      }
+      if(conn != null)
+      {
+        conn.Close();
+      }
     }
   }
 }

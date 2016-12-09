@@ -30,27 +30,26 @@ namespace  HairSalon
     [Fact]
     public void Test_EqualOverride_True()
     {
-      Stylist firstStylist = new Stylist("Terry", "3309627946", "notes");
-      Stylist secondStylist = new Stylist("Terry", "3309627946", "notes");
+      Stylist firstStylist = new Stylist("Terry", "notes");
+      Stylist secondStylist = new Stylist("Terry", "notes");
       Assert.Equal(firstStylist, secondStylist);
     }
     [Fact]
     public void StylistSavesTODatabase_true()
     {
       //Arrange
-      Stylist newStylist = new Stylist("Terry", "3309627946", "notes");
+      Stylist newStylist = new Stylist("Terry", "notes");
       //Act
       newStylist.Save();
       List<Stylist> allStylists = Stylist.GetAll();
       //Assert
-      // Console.WriteLine(allStylists[0].GetId() + " " + allStylists[0].GetName()+ " " + allStylists[0].GetPhone() + " " +allStylists[0].GetNotes());
       Assert.Equal(allStylists[0], newStylist);
     }
     [Fact]
     public void StylistFindsInDatabase_True()
     {
       //Arrange
-      Stylist newStylist = new Stylist("Terry", "3309627946", "notes");
+      Stylist newStylist = new Stylist("Terry", "notes");
       newStylist.Save();
       //Act
       Stylist findStylist = Stylist.Find(newStylist.GetId());
@@ -60,7 +59,24 @@ namespace  HairSalon
     [Fact]
     public void Edit_ChangesName_true()
     {
+      Stylist newStylist = new Stylist("Terry", "notes");
+      newStylist.Save();
+      newStylist.EditName("Jerry");
 
+      Stylist foundStylist = Stylist.Find(newStylist.GetId());
+
+      Assert.Equal("Jerry", foundStylist.GetName());
+    }
+    [Fact]
+    public void Edit_ChangesDetails_true()
+    {
+      Stylist newStylist = new Stylist("Terry", "notes");
+      newStylist.Save();
+      newStylist.EditName("Jerry");
+
+      Stylist foundStylist = Stylist.Find(newStylist.GetId());
+
+      Assert.Equal("Jerry", foundStylist.GetName());
     }
     [Fact]
     public void Test_Delete_deleteCategoryFromDB()
