@@ -200,5 +200,22 @@ namespace HairSalon.Objects
         conn.Close();
       }
     }
+
+    public void Delete()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("DELETE FROM stylist WHERE id =@stylistId;", conn);
+      SqlParameter stylistIdParameter = new SqlParameter("@stylistId", this.GetId());
+
+      cmd.Parameters.Add(stylistIdParameter);
+      cmd.ExecuteNonQuery();
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
   }
 }

@@ -81,7 +81,17 @@ namespace  HairSalon
     [Fact]
     public void Test_Delete_deleteCategoryFromDB()
     {
-
+      //Arrange
+      Stylist stylist1 = new Stylist("Jerry", "notes");
+      Stylist stylist2 = new Stylist("Samantha","more notes");
+      stylist1.Save();
+      stylist2.Save();
+      //Act
+      stylist1.Delete();
+      List<Stylist> resultStylist = Stylist.GetAll();
+      List<Stylist> testStylist = new List<Stylist> {stylist2};
+      //Assert
+      Assert.Equal(testStylist, resultStylist);
     }
   }
 }
