@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+@{
+  Layout="Shared/_Layout.cshtml";
+}
+
+  <div class="container">
+    <h1>Hair Salon Manager</h1>
+    <h2>Modify Stylist</h2><br>
+    <h3>@Model.GetName() 's details</h3>
+      <form action="/modify/stylist/@Model.GetId()" method="post">
+        <input type="hidden" name="_method" value="PATCH">
+        <input class="form-control" type="text" required name="stylist_name" placeholder="@Model.GetName()">
+        <input class="form-control" type="text" required name="stylist_notes" placeholder="@Model.GetNotes()">
+        <button class="btn btn-info" type="submit">Modify Cuisine</button>
+      </form>
+    <h5><a href="/">Home</a></h5>
+  </div>
