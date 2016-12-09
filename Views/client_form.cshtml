@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+@{
+  Layout="Shared/_Layout.cshtml";
+}
+
+  <div class="container">
+    <h1>Hair Salon Manager</h1>
+    <h2>New Client</h2>
+
+      <form action="/add/client" method="post">
+        <input class="form-control" type="text" name="client_name" placeholder="Enter new client name" required>
+        <input class="form-control" type="text" name="client_notes" placeholder="Client Details">
+        <select class="form-control" name = "stylist_id">
+          @foreach(var listItem in Model)
+          {
+            <option value="@listItem.GetId()">@listItem.GetName()</option>
+          }
+        </select>
+        <button class="btn btn-info"type="submit">Generate Client</button>
+      </form>
+    <h5><a href="/">Stylist List</a></h5>
+  </div>

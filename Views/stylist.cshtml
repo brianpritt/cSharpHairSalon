@@ -14,7 +14,7 @@
       <ul>
       @foreach (var client in Model.FindClients())
       {
-        <li><a href="/restaurant/@client.GetId()">@client.GetName()</a></li>
+        <li><a href="/clients/@client.GetId()">@client.GetName()</a></li>
       }
     </ul>
     <hr>

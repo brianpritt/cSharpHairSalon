@@ -5,12 +5,12 @@
 
   <div class="container">
     <h1>Hair Salon Manager</h1>
-    <h2>Modify Stylist</h2><br>
+    <h2>Modify Client</h2><br>
     <h3>@Model.GetName() 's details</h3>
-      <form action="/modify/stylist/@Model.GetId()" method="post">
+      <form action="/modify/client/@Model.GetId()" method="post">
         <input type="hidden" name="_method" value="PATCH">
-        <input class="form-control" type="text" required name="stylist_name" placeholder="Name: @Model.GetName()">
-        <input class="form-control" type="text" required name="stylist_notes" placeholder="Details: @Model.GetNotes()">
+        <input class="form-control" type="text" required name="client_name" placeholder="Name: @Model.GetName()">
+        <input class="form-control" type="text" required name="client_notes" placeholder="Details: @Model.GetNotes()">
         <button class="btn btn-info" type="submit">Modify Cuisine</button>
       </form>
     <h5><a href="/">Home</a></h5>
