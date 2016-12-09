@@ -24,8 +24,6 @@ _This application conforms to the following specs:_
 * The application will delete a stylist object from the database
   * input: {Bill} {Jill} - Delete - > {Jill}
   * output {Bill}
-* The application will perform all above tests for client objects
-
 * The application will retrieve all customer objects under specific stylist
   * input: {Jane}
   * output: {Andy} {Cybil} {Jonas}

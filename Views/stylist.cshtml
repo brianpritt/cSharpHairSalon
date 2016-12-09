@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+@{
+  Layout="Shared/_Layout.cshtml";
+}
+
+  <div class="container">
+      <h1>Hair Salon Manager</h1>
+      <h2>Details for @Model.GetName()</h2>
+          <h3>Details:</h3>
+          <p>@Model.GetNotes()</p>
+      <h3>@Model.GetName() 's Clients:</h3>
+      @if(Model.FindClients().Count == 0)
+        <h4>No clients to list currently.</h4>
+      <ul>
+      @foreach (var client in Model.FindClients())
+      {
+        <li><a href="/restaurant/@client.GetId()">@client.GetName()</a></li>
+      }
+    </ul>
+    <hr>
+    <h5><a href="/modify/stylist/@Model.GetId()">Modify this Stylist</a></h5>
+    <hr>
+      <h5><a href="/add/client">New Client</a></h5>
+      <h5><a href="/add/stylist">New Stylist</a></h5>
+      <h5><a href="/">Home</a></h5><br>
+      <form action="/delete-stylist/@Model.GetId()" method="post">
+        <input hidden="true" name="_method" value="DELETE">
+        <button class="btn btn-danger" type="submit">Delete this Stylist and all of their clients.</button>
+      </form>
+    </div>
