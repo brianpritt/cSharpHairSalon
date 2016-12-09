@@ -46,7 +46,7 @@ _This application conforms to the following specs:_
     * GO
     * USE hair_salon
     * GO
-    * CREATE TABLE stylist (id INT IDENTITY(1,1), name VARCHAR(255), phone VARCHAR(255));
+    * CREATE TABLE stylist (id INT IDENTITY(1,1), name VARCHAR(255), phone VARCHAR(255), notes VARCHAR(255));
     * GO
     * CREATE TABLE customer (id INT IDENTITY(1,1), name VARCHAR(255), phone VARCHAR(255), last_visit VARCHAR(255), notes VARCHAR(255), stylist_id INT)
     * GO
