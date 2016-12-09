@@ -43,7 +43,7 @@ namespace  HairSalon
       newStylist.Save();
       List<Stylist> allStylists = Stylist.GetAll();
       //Assert
-      Console.WriteLine(allStylists[0].GetId() + " " + allStylists[0].GetName()+ " " + allStylists[0].GetPhone() + " " +allStylists[0].GetNotes());
+      // Console.WriteLine(allStylists[0].GetId() + " " + allStylists[0].GetName()+ " " + allStylists[0].GetPhone() + " " +allStylists[0].GetNotes());
       Assert.Equal(allStylists[0], newStylist);
     }
     [Fact]
@@ -51,8 +51,8 @@ namespace  HairSalon
     {
       //Arrange
       Stylist newStylist = new Stylist("Terry", "3309627946", "notes");
-      //Act
       newStylist.Save();
+      //Act
       Stylist findStylist = Stylist.Find(newStylist.GetId());
       //Assert
       Assert.Equal(newStylist, findStylist);

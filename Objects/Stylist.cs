@@ -53,7 +53,6 @@ namespace HairSalon.Objects
       bool nameEquality = (this.GetName() == newStylist.GetName());
       bool phoneEqulity = (this.GetPhone() == newStylist.GetPhone());
       bool notesEquality = (this.GetNotes() == newStylist.GetNotes());
-      Console.WriteLine(nameEquality);
       return (nameEquality && phoneEqulity && notesEquality);
       }
     }
@@ -83,8 +82,6 @@ namespace HairSalon.Objects
         string notes = rdr.GetString(3);
         Stylist newStylist = new Stylist(name, phone, notes, id);
         allStylists.Add(newStylist);
-        Console.WriteLine(id + " " + name + " " + phone + " " + notes);
-        Console.WriteLine(allStylists[0 ].GetId());
       }
         if(rdr != null)
         {
@@ -112,7 +109,10 @@ namespace HairSalon.Objects
       cmd.Parameters.Add(phoneParameter);
       cmd.Parameters.Add(notesParameter);
       SqlDataReader rdr = cmd.ExecuteReader();
-
+      while(rdr.Read())
+      {
+        this._id = rdr.GetInt32(0);
+      }
       if(rdr != null)
       {
         rdr.Close();
@@ -147,6 +147,7 @@ namespace HairSalon.Objects
         foundStylistNotes = rdr.GetString(3);
       }
       Stylist foundStylist = new Stylist(foundStylistName, foundStylistPhone, foundStylistNotes, foundId);
+      Console.WriteLine(foundStylistName);
       if(rdr != null)
       {
         rdr.Close();
