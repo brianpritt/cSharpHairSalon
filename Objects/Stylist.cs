@@ -32,7 +32,6 @@ namespace HairSalon.Objects
       return _id;
     }
 
-
     public override bool Equals(System.Object otherStylist)
     {
       if (!(otherStylist is Stylist))
@@ -56,6 +55,37 @@ namespace HairSalon.Objects
       SqlCommand cmd = new SqlCommand("DELETE FROM stylist;", conn);
       cmd.ExecuteNonQuery();
       conn.Close();
+    }
+    public List<Client> FindClients()
+    {
+      List<Client> foundClient = new List<Client> {};
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM clients WHERE stylist_id = @StylistId;", conn);
+      SqlParameter stylistIdParameter = new SqlParameter("@StylistId", this.GetId());
+      cmd.Parameters.Add(stylistIdParameter);
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      while (rdr.Read())
+      {
+        int id = rdr.GetInt32(0);
+        string name = rdr.GetString(1);
+        string notes = rdr.GetString(2);
+        int stylist_id = rdr.GetInt32(3);
+
+        Client newClient = new Client(name, notes, stylist_id, id);
+        foundClient.Add(newClient);
+      }
+      if(rdr != null)
+      {
+        rdr.Close();
+      }
+      if(conn != null)
+      {
+        conn.Close();
+      }
+      return foundClient;
     }
     public static List<Stylist> GetAll()
     {

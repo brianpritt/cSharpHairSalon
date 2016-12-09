@@ -163,7 +163,7 @@ namespace HairSalon.Objects
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("UPDATE client SET name = @NewName OUTPUT INSERTED.name WHERE id = @clientId;", conn);
+      SqlCommand cmd = new SqlCommand("UPDATE clients SET name = @NewName OUTPUT INSERTED.name WHERE id = @clientId;", conn);
 
       SqlParameter nameParameter = new SqlParameter("@NewName", newName);
       SqlParameter clientIdParameter = new SqlParameter("@clientId", this.GetId());
@@ -190,7 +190,7 @@ namespace HairSalon.Objects
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("UPDATE client SET notes = @NewNotes OUTPUT INSERTED.notes WHERE id = @clientId;", conn);
+      SqlCommand cmd = new SqlCommand("UPDATE clients SET notes = @NewNotes OUTPUT INSERTED.notes WHERE id = @clientId;", conn);
 
       SqlParameter notesParameter = new SqlParameter("@NewNotes", newNotes);
       SqlParameter clientIdParameter = new SqlParameter("@clientId", this.GetId());
@@ -218,7 +218,7 @@ namespace HairSalon.Objects
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("DELETE FROM client WHERE id =@clientId;", conn);
+      SqlCommand cmd = new SqlCommand("DELETE FROM clients WHERE id =@clientId;", conn);
       SqlParameter clientIdParameter = new SqlParameter("@clientId", this.GetId());
 
       cmd.Parameters.Add(clientIdParameter);

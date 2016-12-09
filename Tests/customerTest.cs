@@ -45,53 +45,70 @@ namespace  HairSalon
       //Assert
       Assert.Equal(allClients[0], newClient);
     }
-    // [Fact]
-    // public void StylistFindsInDatabase_True()
-    // {
-    //   //Arrange
-    //   Stylist newStylist = new Stylist("Terry", "notes");
-    //   newStylist.Save();
-    //   //Act
-    //   Stylist findStylist = Stylist.Find(newStylist.GetId());
-    //   //Assert
-    //   Assert.Equal(newStylist, findStylist);
-    // }
-    // [Fact]
-    // public void Edit_ChangesName_true()
-    // {
-    //   Stylist newStylist = new Stylist("Terry", "notes");
-    //   newStylist.Save();
-    //   newStylist.EditName("Jerry");
-    //
-    //   Stylist foundStylist = Stylist.Find(newStylist.GetId());
-    //
-    //   Assert.Equal("Jerry", foundStylist.GetName());
-    // }
-    // [Fact]
-    // public void Edit_ChangesDetails_true()
-    // {
-    //   Stylist newStylist = new Stylist("Terry", "notes");
-    //   newStylist.Save();
-    //   newStylist.EditName("Jerry");
-    //
-    //   Stylist foundStylist = Stylist.Find(newStylist.GetId());
-    //
-    //   Assert.Equal("Jerry", foundStylist.GetName());
-    // }
-    // [Fact]
-    // public void Test_Delete_deleteCategoryFromDB()
-    // {
-    //   //Arrange
-    //   Stylist stylist1 = new Stylist("Jerry", "notes");
-    //   Stylist stylist2 = new Stylist("Samantha","more notes");
-    //   stylist1.Save();
-    //   stylist2.Save();
-    //   //Act
-    //   stylist1.Delete();
-    //   List<Stylist> resultStylist = Stylist.GetAll();
-    //   List<Stylist> testStylist = new List<Stylist> {stylist2};
-    //   //Assert
-    //   Assert.Equal(testStylist, resultStylist);
-    // }
+    [Fact]
+    public void ClientFindsInDatabase_True()
+    {
+      //Arrange
+      Client newClient = new Client("Terry", "notes", 0);
+      newClient.Save();
+      //Act
+      Client findClient = Client.Find(newClient.GetId());
+      //Assert
+      Assert.Equal(newClient, findClient);
+    }
+    [Fact]
+    public void Edit_ChangesName_true()
+    {
+      Client newClient = new Client("Terry", "notes", 0);
+      newClient.Save();
+      newClient.EditName("Jerry");
+
+      Client foundClient = Client.Find(newClient.GetId());
+
+      Assert.Equal("Jerry", foundClient.GetName());
+    }
+    [Fact]
+    public void Edit_ChangesDetails_true()
+    {
+      Client newClient = new Client("Terry", "notes", 0);
+      newClient.Save();
+      newClient.EditName("Jerry");
+
+      Client foundClient = Client.Find(newClient.GetId());
+
+      Assert.Equal("Jerry", foundClient.GetName());
+    }
+    [Fact]
+    public void Test_Delete_deleteClientFromDB()
+    {
+      //Arrange
+      Client client1 = new Client("Jerry", "notes",0);
+      Client client2 = new Client("Samantha","more notes", 0);
+      client1.Save();
+      client2.Save();
+      //Act
+      client1.Delete();
+      List<Client> resultClient = Client.GetAll();
+      List<Client> testClient = new List<Client> {client2};
+      //Assert
+      Assert.Equal(testClient, resultClient);
+    }
+    [Fact]
+    public void Test_returnCustomerDataUnderStylist()
+    {
+      Stylist newStylist = new Stylist("Terry", "notes");
+      newStylist.Save();
+      int newStylistId = newStylist.GetId();
+      Client newClient = new Client("Jerry", "notes", newStylistId);
+      newClient.Save();
+
+      Stylist findStylist = Stylist.Find(newStylist.GetId());
+      Client findClient = Client.Find(newClient.GetId());
+      int stylistId = findStylist.GetId();
+      int clientStylistId = findClient.GetStylistId();
+
+      Assert.Equal(stylistId, clientStylistId);
+
+    }
   }
 }
