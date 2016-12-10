@@ -186,7 +186,6 @@ namespace HairSalon.Objects
       }
     }
 
-
     public string FindStylist()
     {
       SqlConnection conn = DB.Connection();
@@ -213,10 +212,7 @@ namespace HairSalon.Objects
       return name;
     }
 
-
-
-
-
+  
     public void EditDetails(string newNotes)
     {
       SqlConnection conn = DB.Connection();

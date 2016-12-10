@@ -164,7 +164,7 @@ namespace HairSalon.Objects
         foundStylistNotes = rdr.GetString(2);
       }
       Stylist foundStylist = new Stylist(foundStylistName, foundStylistNotes, foundId);
-  
+
       if(rdr != null)
       {
         rdr.Close();

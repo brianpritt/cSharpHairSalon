@@ -8,6 +8,7 @@
       @if (Model.Count > 0)
       {
         <h2>Stylists</h2>
+        <hr>
         @foreach (var stylist in Model)
         {
           <h3><a href = "/stylist/@stylist.GetId()">@stylist.GetName()</a></h3>
@@ -20,7 +21,7 @@
         }
         <hr>
           <h5><a href="/add/client">New Client</a></h5>
-          <h5><a href="/add/stylist">New Stylist</a></h5><br>
+          <h5><a href="/add/stylist">New Stylist</a></h5><hr>
           <form action="/delete-all" method="post">
             <input type="hidden" name="_method" value="DELETE">
             <button class="btn btn-danger" type="submit" name="button">DELETE EVERYTHING!</button>

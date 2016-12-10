@@ -6,8 +6,9 @@
   <div class="container">
       <h1>Hair Salon Manager</h1>
       <h2>Details for @Model.GetName()</h2>
-          <h3>Details:</h3>
-          <p>@Model.GetNotes()</p>
+      <hr>
+      <h3>Details:</h3>
+      <p>@Model.GetNotes()</p>
       <h3>@Model.GetName() 's Clients:</h3>
       @if(Model.FindClients().Count == 0)
         <h4>No clients to list currently.</h4>
@@ -22,7 +23,7 @@
     <hr>
       <h5><a href="/add/client">New Client</a></h5>
       <h5><a href="/add/stylist">New Stylist</a></h5>
-      <h5><a href="/">Home</a></h5><br>
+      <h5><a href="/">Home</a></h5><hr>
       <form action="/delete-stylist/@Model.GetId()" method="post">
         <input hidden="true" name="_method" value="DELETE">
         <button class="btn btn-danger" type="submit">Delete this Stylist and all of their clients.</button>
